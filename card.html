@@ -1,35 +1,249 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slider de Amor ❤️</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Slider e Músicas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #fce4ec;
+            justify-content: center;
+        }
+        .container {
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            background: #d81b60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background 0.3s;
+        }
+        .tab-btn:hover {
+            background: #a31548;
+        }
+        .content {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        .slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            background: white;
+            padding: 10px;
+        }
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            min-width: 100%;
+            text-align: center;
+        }
+        .slide img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .caption {
+            font-size: 18px;
+            color: #d81b60;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        #prevBtn { left: 10px; }
+        #nextBtn { right: 10px; }
+        .slider-btn:hover { background: rgba(0, 0, 0, 0.9); }
+        .music-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+.music-box {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 2px solid #d81b60;
+    border-radius: 5px;
+    padding: 10px;
+    gap: 10px;
+    cursor: pointer;
+}
+.music-box img {
+    width: 100px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.music-info {
+    flex: 1;
+    text-align: left;
+}
+.music-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #d81b60;
+}
+.music-time {
+    font-size: 14px;
+    color: #555;
+}
+audio {
+    display: none;
+}
+    </style>
 </head>
 <body>
-    <section class="slider-container">
-        <button id="prevBtn" class="slider-btn">&#10094;</button>
-        <div class="slider">
-            <div class="slide">
-                <img src="/img/457496454_955514846344340_2364739620183576293_n.jpg" alt="Imagem 1">
-                <p class="caption">"O amor verdadeiro ilumina até os dias mais escuros."</p>
-            </div>
-            <div class="slide">
-                <img src="/img/472312706_916129467168776_1749313679869206864_n.jpg" alt="Imagem 2">
-                <p class="caption">"Em cada batida do meu coração, só há espaço para você."</p>
-            </div>
-            <div class="slide">
-                <img src="/img/475931668_923227592928905_8033948837943277303_n.jpg" alt="Imagem 3">
-                <p class="caption">"O melhor lugar do mundo é dentro do seu abraço."</p>
-            </div>
-            <div class="slide">
-                <img src="/img/476489366_1933502933725217_7496051257186855376_n.jpg" alt="Imagem 4">
-                <p class="caption">"Com você, cada momento é um lindo poema de amor."</p>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn" onclick="openTab('sliderTab')">Imagens</button>
+            <button class="tab-btn" onclick="openTab('musicTab')">Músicas</button>
+        </div>
+        
+        <div id="sliderTab" class="content active">
+            <div class="slider-container">
+                <div class="slider">
+                    <div class="slide"><img src="/img/457496454_955514846344340_2364739620183576293_n.jpg" alt="Imagem 1"><div class="caption">O amor verdadeiro ilumina até os dias mais escuros.</div></div>
+                    <div class="slide"><img src="/img/472312706_916129467168776_1749313679869206864_n.jpg" alt="Imagem 2"><div class="caption">Em cada batida do meu coração, só há espaço para você.</div></div>
+                    <div class="slide"><img src="/img/475931668_923227592928905_8033948837943277303_n.jpg" alt="Imagem 3"><div class="caption">O melhor lugar do mundo é dentro do seu abraço.</div></div>
+                    <div class="slide"><img src="/img/476489366_1933502933725217_7496051257186855376_n.jpg" alt="Imagem 3"><div class="caption">Com você, cada momento é um lindo poema de amor.</div></div>
+                </div>
+                <button class="slider-btn" id="prevBtn">&#10094;</button>
+                <button class="slider-btn" id="nextBtn">&#10095;</button>
             </div>
         </div>
-        <button id="nextBtn" class="slider-btn">&#10095;</button>
-    </section>
+        
 
-    <script src="scripts.js"></script>
+        <div id="musicTab" class="content">
+            <p>CLIQUE NA MÚSICA</p>
+            <br>
+            <div class="music-container">
+                <div class="music-box" onclick="playMusic('audio1')">
+                    <img src="/img/tim mais.jpg" alt="Música 1">
+                    <div class="music-info">
+                        <div class="music-title">Eu amo você</div>
+                        <div class="music-time">04:04</div>
+                    </div>
+                </div>
+                <audio id="audio1" src="/audio/Eu Amo Você.mp3"></audio>
+                
+                <div class="music-box" onclick="playMusic('audio2')">
+                    <img src="./img/blond.jpg" alt="Música 2">
+                    <div class="music-info">
+                        <div class="music-title">Pink + White</div>
+                        <div class="music-time">03:05</div>
+                    </div>
+                </div>
+                <audio id="audio2" src="/audio/Frank Ocean - Pink + White.mp3"></audio>
+                
+                <div class="music-box" onclick="playMusic('audio3')">
+                    <img src="./img/download.jpg" alt="Música 3">
+                    <div class="music-info">
+                        <div class="music-title">Freudian</div>
+                        <div class="music-time">04:13</div>
+                    </div>
+                </div>
+                <audio id="audio3" src="/audio/Daniel Caesar - Freudian, a Visual.mp3"></audio>
+                
+                <div class="music-box" onclick="playMusic('audio4')">
+                    <img src="/img/0.jpg" alt="Música 4">
+                    <div class="music-info">
+                        <div class="music-title">Oceano</div>
+                        <div class="music-time">06:15</div>
+                    </div>
+                </div>
+                <audio id="audio4" src="/audio/Djavan - Oceano (Ao Vivo).mp3"></audio>
+            </div>
+        </div>
+    <script>
+        let index = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            index = (index + 1) % totalSlides;
+            updateSlider();
+        });
+        
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            index = (index - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        });
+        
+        function updateSlider() {
+            const slider = document.querySelector('.slider');
+            slider.style.transform = `translateX(-${index * 100}%)`;
+        }
+        
+        function openTab(tabId) {
+            document.querySelectorAll('.content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+        function openTab(tabId) {
+    document.querySelectorAll('.content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.getElementById(tabId).classList.add('active');
+}
+
+function playMusic(audioId) {
+    document.querySelectorAll('audio').forEach(audio => {
+        if (audio.id !== audioId) {
+            audio.pause();
+            audio.currentTime = 0;
+        }
+    });
+    const audio = document.getElementById(audioId);
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
+
+    </script>
 </body>
 </html>
